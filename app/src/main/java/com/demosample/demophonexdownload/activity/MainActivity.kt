@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                     if (!videoLIst.contains(url))
                         videoLIst.add(url)
                     layoutBottomSheet.visibility = View.VISIBLE
-                    videoAdapter.notifyItemChanged(videoLIst.size)
+                    videoAdapter.notifyItemInserted(videoLIst.size)
 
                     val p = view!!.layoutParams as MarginLayoutParams
                     p.setMargins(0, 0, 0, 120)
