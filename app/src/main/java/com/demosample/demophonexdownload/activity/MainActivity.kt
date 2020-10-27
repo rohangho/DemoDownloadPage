@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup.MarginLayoutParams
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -42,11 +43,14 @@ class MainActivity : AppCompatActivity() {
         sheetBehavior!!.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(view: View, i: Int) {
                 if (BottomSheetBehavior.STATE_EXPANDED == i) {
+                    downloadTitle.visibility = View.GONE
                     layoutBottomSheet.setBackgroundResource(R.drawable.boxy_shape)
+                    videoRecycler.visibility = View.VISIBLE
                 }
                 if (BottomSheetBehavior.STATE_COLLAPSED == i) {
 
                     downloadTitle.visibility = View.VISIBLE
+                    videoRecycler.visibility = View.GONE
                     layoutBottomSheet.setBackgroundResource(R.drawable.rounder_shape)
                 }
                 if (BottomSheetBehavior.STATE_HIDDEN == i) {
@@ -82,9 +86,14 @@ class MainActivity : AppCompatActivity() {
                 super.onLoadResource(view, url)
                 Log.e("HIIII", "onLoadResource: $url")
                 if (url!!.contains(".mp4", true)) {
-                    videoLIst.add(url)
+                    if (!videoLIst.contains(url))
+                        videoLIst.add(url)
                     layoutBottomSheet.visibility = View.VISIBLE
-                    videoAdapter.notifyDataSetChanged()
+                    videoAdapter.notifyItemChanged(videoLIst.size)
+
+                    val p = view!!.layoutParams as MarginLayoutParams
+                    p.setMargins(0, 0, 0, 120)
+                    webDisplayer.requestLayout()
                 }
             }
         }
