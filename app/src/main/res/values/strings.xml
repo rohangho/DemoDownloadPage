@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DemoPhonexDownload</string>
+    <string name="video_downloadable_detected">Video Downloadable Detected</string>
 </resources>
