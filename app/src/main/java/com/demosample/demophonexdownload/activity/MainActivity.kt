@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var layoutBottomSheet: ConstraintLayout
     private lateinit var downloadTitle : TextView
     private lateinit var videoRecycler: RecyclerView
-    var videoLIst:ArrayList<String> = ArrayList()
-    var videoAdapter = VideoAdapter(this,videoLIst);
+    var videoLIst: ArrayList<String> = ArrayList()
+    var videoAdapter = VideoAdapter(this, videoLIst)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             override fun onSlide(view: View, v: Float) {}
         })
 
-        webDisplayer = findViewById(R.id.webview);
+        webDisplayer = findViewById(R.id.webview)
         webDisplayer.loadUrl("https://www.instagram.com")
         webDisplayer.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
@@ -75,14 +75,15 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-
+            /**
+             * Getting all the link of the resoursces
+             */
             override fun onLoadResource(view: WebView?, url: String?) {
                 super.onLoadResource(view, url)
-                Log.e("HIIII", "onLoadResource: $url" )
-                if(url!!.contains(".mp4",true))
-                {
+                Log.e("HIIII", "onLoadResource: $url")
+                if (url!!.contains(".mp4", true)) {
                     videoLIst.add(url)
-                    layoutBottomSheet.visibility =  View.VISIBLE
+                    layoutBottomSheet.visibility = View.VISIBLE
                     videoAdapter.notifyDataSetChanged()
                 }
             }
