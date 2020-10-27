@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,7 @@ class VideoAdapter(val context: Context,val list: ArrayList<String>) : RecyclerV
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.thumbnail.setImageBitmap(Utility.retriveVideoFrameFromVideo(list[position]))
+        holder.title.text = URLUtil.guessFileName(list[position], null, null)
     }
     override fun getItemCount(): Int {
         return list.size

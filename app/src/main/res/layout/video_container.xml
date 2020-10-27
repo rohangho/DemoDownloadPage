@@ -11,6 +11,7 @@
         android:layout_height="100dp"
         android:id="@+id/videoTumbnail"
         android:layout_alignParentLeft="true"
+        android:scaleType="centerCrop"
         android:layout_marginLeft="10dp"
         android:padding="5dp" />
 
@@ -18,12 +19,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/videoTumbnail"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_toLeftOf="@id/downloadButton"
         android:id="@+id/title"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textSize="15sp"
         android:layout_centerVertical="true"
-        tools:text="ughiug"
-        />
+        tools:text="ughiug" />
 
     <ImageView
         android:layout_width="50dp"
