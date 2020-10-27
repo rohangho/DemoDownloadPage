@@ -22,7 +22,8 @@ class VideoAdapter(val context: Context,val list: ArrayList<String>) : RecyclerV
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.thumbnail.setImageBitmap(Utility.retriveVideoFrameFromVideo(list[position]))
-        holder.title.text = URLUtil.guessFileName(list[position], null, null)
+        val titlename = URLUtil.guessFileName(list[position], null, null).substring(0, URLUtil.guessFileName(list[position], null, null).indexOf("_")) + ".mp4"
+        holder.title.text = titlename
     }
     override fun getItemCount(): Int {
         return list.size

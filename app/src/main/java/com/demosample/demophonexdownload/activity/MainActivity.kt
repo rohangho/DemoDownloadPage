@@ -45,12 +45,10 @@ class MainActivity : AppCompatActivity() {
                 if (BottomSheetBehavior.STATE_EXPANDED == i) {
                     downloadTitle.visibility = View.GONE
                     layoutBottomSheet.setBackgroundResource(R.drawable.boxy_shape)
-                    videoRecycler.visibility = View.VISIBLE
                 }
                 if (BottomSheetBehavior.STATE_COLLAPSED == i) {
 
                     downloadTitle.visibility = View.VISIBLE
-                    videoRecycler.visibility = View.GONE
                     layoutBottomSheet.setBackgroundResource(R.drawable.rounder_shape)
                 }
                 if (BottomSheetBehavior.STATE_HIDDEN == i) {
@@ -92,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     videoAdapter.notifyItemInserted(videoLIst.size)
 
                     val p = view!!.layoutParams as MarginLayoutParams
-                    p.setMargins(0, 0, 0, 120)
+                    p.setMargins(0, 0, 0, 90)
                     webDisplayer.requestLayout()
                 }
             }
