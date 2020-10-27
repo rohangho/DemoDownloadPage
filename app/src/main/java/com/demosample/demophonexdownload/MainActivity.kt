@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webDisplayer: WebView
-    private lateinit var menuIcon: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,22 +31,18 @@ class MainActivity : AppCompatActivity() {
                 request: WebResourceRequest
             ): Boolean {
                 view.loadUrl(request.url.toString())
-               // menuIcon!!.isVisible = request.url.toString().endsWith(".mp4")
-                Log.e("HIIII", "shouldOverrideUrlLoading: ${request.url.toString()}" )
+                Log.e("HIIII", "shouldOverrideUrlLoading: ${request.url}" )
                 return true
             }
 
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 Log.e("HIIII", "onPageStarted: $url")
-               // menuIcon!!.isVisible = url.endsWith(".mp4")
+
 
             }
 
-//            override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
-//                return super.shouldInterceptRequest(view, request)
-//                Log.e("HIIII", "shouldInterceptRequest: ${request?.url.toString()}" )
-//            }
+
 
             override fun onLoadResource(view: WebView?, url: String?) {
                 super.onLoadResource(view, url)
@@ -74,28 +69,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.my_menu, menu)
-
-        return true
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menuIcon = menu!!.findItem(R.id.actiondownload)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.actiondownload -> {
-            startActivity(Intent(this, DownloadPage::class.java))
-            true
-        }
-
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
 
 
 }
