@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -24,22 +25,33 @@ class MainActivity : AppCompatActivity() {
 
         webDisplayer = findViewById(R.id.webview);
         // webDisplayer.loadUrl("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4")
-        webDisplayer.loadUrl("https://www.wikipedia.org")
+        webDisplayer.loadUrl("https://www.instagram.com")
         webDisplayer.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
                 request: WebResourceRequest
             ): Boolean {
                 view.loadUrl(request.url.toString())
-                menuIcon!!.isVisible = request.url.toString().endsWith(".mp4")
+               // menuIcon!!.isVisible = request.url.toString().endsWith(".mp4")
+                Log.e("HIIII", "shouldOverrideUrlLoading: ${request.url.toString()}" )
                 return true
             }
 
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 Log.e("HIIII", "onPageStarted: $url")
-                menuIcon!!.isVisible = url.endsWith(".mp4")
+               // menuIcon!!.isVisible = url.endsWith(".mp4")
 
+            }
+
+//            override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
+//                return super.shouldInterceptRequest(view, request)
+//                Log.e("HIIII", "shouldInterceptRequest: ${request?.url.toString()}" )
+//            }
+
+            override fun onLoadResource(view: WebView?, url: String?) {
+                super.onLoadResource(view, url)
+                Log.e("HIIII", "onLoadResource: $url" )
             }
         }
         webDisplayer.settings.loadsImagesAutomatically = true
