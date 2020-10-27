@@ -1,19 +1,19 @@
-package com.demosample.demophonexdownload
+package com.demosample.demophonexdownload.activity
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.demosample.demophonexdownload.R
+import com.demosample.demophonexdownload.adapter.VideoAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
@@ -23,6 +23,9 @@ class MainActivity : AppCompatActivity() {
     private var sheetBehavior: BottomSheetBehavior<*>? = null
     private lateinit var layoutBottomSheet: ConstraintLayout
     private lateinit var downloadTitle : TextView
+    private lateinit var videoRecycler: RecyclerView
+    var videoLIst:ArrayList<String> = ArrayList()
+    var videoAdapter = VideoAdapter(this,videoLIst);
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +33,12 @@ class MainActivity : AppCompatActivity() {
         layoutBottomSheet = findViewById(R.id.bcks)
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet)
         downloadTitle = findViewById(R.id.textHeadings)
+        videoRecycler = findViewById(R.id.recyclerList)
+        videoRecycler.layoutManager= LinearLayoutManager(this)
+        videoRecycler.adapter = videoAdapter
+
+
+
         sheetBehavior!!.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(view: View, i: Int) {
                 if (BottomSheetBehavior.STATE_EXPANDED == i) {
@@ -72,7 +81,9 @@ class MainActivity : AppCompatActivity() {
                 Log.e("HIIII", "onLoadResource: $url" )
                 if(url!!.contains(".mp4",true))
                 {
+                    videoLIst.add(url)
                     layoutBottomSheet.visibility =  View.VISIBLE
+                    videoAdapter.notifyDataSetChanged()
                 }
             }
         }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/videoTumbnail"
+        android:layout_alignParentLeft="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/videoTumbnail"
+        android:id="@+id/title"
+        android:textSize="20sp"
+        android:layout_centerVertical="true"
+        tools:text="ughiug"
+        />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/downloadButton"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_baseline_cloud_download_24"
+        android:layout_centerVertical="true"
+        />
+
+
+</RelativeLayout>
