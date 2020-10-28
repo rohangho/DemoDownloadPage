@@ -17,7 +17,6 @@ object Utility {
             bitmap = mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST)
         } catch (e: Exception) {
             e.printStackTrace()
-            throw Throwable("Exception in retriveVideoFrameFromVideo(String videoPath)" + e.message)
         } finally {
             mediaMetadataRetriever?.release()
         }

@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         webDisplayer = findViewById(R.id.webview)
-        webDisplayer.loadUrl("https://www.instagram.com")
+        webDisplayer.loadUrl("https://gaana.com")
         webDisplayer.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
@@ -77,26 +76,10 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-            /**
-             * Getting all the link of the resoursces
-             */
-            override fun onLoadResource(view: WebView?, url: String?) {
-                super.onLoadResource(view, url)
-                Log.e("HIIII", "onLoadResource: $url")
-                if (url!!.contains(".mp4", true)) {
-                    if (!videoLIst.contains(url))
-                        videoLIst.add(url)
-                    layoutBottomSheet.visibility = View.VISIBLE
-                    videoAdapter.notifyItemInserted(videoLIst.size)
-
-                    val p = view!!.layoutParams as MarginLayoutParams
-                    p.setMargins(0, 0, 0, 90)
-                    webDisplayer.requestLayout()
-                }
-            }
         }
         webDisplayer.settings.loadsImagesAutomatically = true
         webDisplayer.settings.javaScriptEnabled = true
+        webDisplayer.settings.domStorageEnabled = true
         webDisplayer.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webDisplayer.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
 
