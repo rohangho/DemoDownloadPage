@@ -7,6 +7,7 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build
 import android.util.Log
 import android.webkit.JavascriptInterface
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.demosample.demophonexdownload.R
 import java.lang.Boolean
@@ -40,10 +41,17 @@ class JsInterface(val mContext: Context) {
 
             createNotificationChannel()
 
+            val expandedView = RemoteViews(mContext.packageName, R.layout.notification_ui)
+
+            expandedView.setImageViewResource(R.id.icon, R.drawable.ic_launcher_foreground)
+            expandedView.setTextViewText(R.id.title, "Browser")
+            expandedView.setTextViewText(R.id.desc, "This is a description. - PLAYING")
+            expandedView.setImageViewResource(R.id.pausePlay, R.drawable.ic_baseline_pause_24)
             val builder = NotificationCompat.Builder(mContext, "0")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Demo Heading")
                 .setContentText("Demo Content")
+                .setCustomBigContentView(expandedView)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
 
@@ -55,10 +63,17 @@ class JsInterface(val mContext: Context) {
         } else {
             createNotificationChannel()
 
+            val expandedView = RemoteViews(mContext.packageName, R.layout.notification_ui)
+
+            expandedView.setImageViewResource(R.id.icon, R.drawable.ic_launcher_foreground)
+            expandedView.setTextViewText(R.id.title, "Browser")
+            expandedView.setTextViewText(R.id.desc, "This is a description. - PLAYING")
+            expandedView.setImageViewResource(R.id.pausePlay, R.drawable.ic_baseline_play_arrow_24)
             val builder = NotificationCompat.Builder(mContext, "0")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Demo Heading")
                 .setContentText("Demo Content")
+                .setCustomBigContentView(expandedView)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
 
