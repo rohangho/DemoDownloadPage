@@ -12,7 +12,10 @@ object Utility {
         var mediaMetadataRetriever: MediaMetadataRetriever? = null
         try {
             mediaMetadataRetriever = MediaMetadataRetriever()
-            if (Build.VERSION.SDK_INT >= 14) mediaMetadataRetriever.setDataSource(videoPath, HashMap()) else mediaMetadataRetriever.setDataSource(videoPath)
+            if (Build.VERSION.SDK_INT >= 14) mediaMetadataRetriever.setDataSource(
+                videoPath,
+                HashMap()
+            ) else mediaMetadataRetriever.setDataSource(videoPath)
             //   mediaMetadataRetriever.setDataSource(videoPath);
             bitmap = mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST)
         } catch (e: Exception) {

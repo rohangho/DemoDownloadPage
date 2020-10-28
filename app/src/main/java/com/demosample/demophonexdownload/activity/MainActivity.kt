@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webDisplayer: WebView
     private var sheetBehavior: BottomSheetBehavior<*>? = null
     private lateinit var layoutBottomSheet: ConstraintLayout
-    private lateinit var downloadTitle : TextView
+    private lateinit var downloadTitle: TextView
     private lateinit var videoRecycler: RecyclerView
     var videoLIst: ArrayList<String> = ArrayList()
     var videoAdapter = VideoAdapter(this, videoLIst)
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet)
         downloadTitle = findViewById(R.id.textHeadings)
         videoRecycler = findViewById(R.id.recyclerList)
-        videoRecycler.layoutManager= LinearLayoutManager(this)
+        videoRecycler.layoutManager = LinearLayoutManager(this)
         videoRecycler.adapter = videoAdapter
 
 
@@ -133,6 +133,7 @@ class MainActivity : AppCompatActivity() {
         webDisplayer.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webDisplayer.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
         webDisplayer.addJavascriptInterface(JsInterface(this), "JSOUT")
+        wv = webDisplayer
 
     }
 
@@ -149,6 +150,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    companion object {
+        lateinit var wv: WebView
+    }
 
 
 }

@@ -12,7 +12,8 @@ import com.demosample.demophonexdownload.R
 import com.demosample.demophonexdownload.adapter.VideoAdapter.MyViewHolder
 import com.demosample.demophonexdownload.utility.Utility
 
-class VideoAdapter(val context: Context,val list: ArrayList<String>) : RecyclerView.Adapter<MyViewHolder>() {
+class VideoAdapter(val context: Context, val list: ArrayList<String>) :
+    RecyclerView.Adapter<MyViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,15 +24,17 @@ class VideoAdapter(val context: Context,val list: ArrayList<String>) : RecyclerV
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         if (Utility.retriveVideoFrameFromVideo(list[position]) != null)
             holder.thumbnail.setImageBitmap(Utility.retriveVideoFrameFromVideo(list[position]))
-        val titlename = URLUtil.guessFileName(list[position], null, null).substring(0, URLUtil.guessFileName(list[position], null, null).indexOf("_")) + ".mp4"
+        val titlename = URLUtil.guessFileName(list[position], null, null)
+            .substring(0, URLUtil.guessFileName(list[position], null, null).indexOf("_")) + ".mp4"
         holder.title.text = titlename
     }
+
     override fun getItemCount(): Int {
         return list.size
     }
 
-    inner class MyViewHolder(itemView: View, context: Context) : RecyclerView.ViewHolder(itemView){
-       val thumbnail = itemView.findViewById<ImageView>(R.id.videoTumbnail)
+    inner class MyViewHolder(itemView: View, context: Context) : RecyclerView.ViewHolder(itemView) {
+        val thumbnail = itemView.findViewById<ImageView>(R.id.videoTumbnail)
         val title = itemView.findViewById<TextView>(R.id.title)
         val downLoadButton = itemView.findViewById<ImageView>(R.id.downloadButton)
     }

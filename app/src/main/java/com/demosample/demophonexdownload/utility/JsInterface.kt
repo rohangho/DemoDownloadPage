@@ -2,14 +2,17 @@ package com.demosample.demophonexdownload.utility
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.webkit.JavascriptInterface
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.demosample.demophonexdownload.R
+import com.demosample.demophonexdownload.broadcast.NotificationListner
 import java.lang.Boolean
 
 
@@ -59,6 +62,13 @@ class JsInterface(val mContext: Context) {
                 mContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.notify(0, builder.build())
 
+            val pendingSwitchIntent = PendingIntent.getBroadcast(
+                mContext, 0, Intent(
+                    mContext,
+                    NotificationListner::class.java
+                ), 0
+            )
+            expandedView.setPendingIntentTemplate(R.id.pausePlay, pendingSwitchIntent)
 
         } else {
             createNotificationChannel()
@@ -80,6 +90,16 @@ class JsInterface(val mContext: Context) {
             val notificationManager =
                 mContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.notify(0, builder.build())
+
+
+            val pendingSwitchIntent = PendingIntent.getBroadcast(
+                mContext, 0, Intent(
+                    mContext,
+                    NotificationListner::class.java
+                ), 0
+            )
+            expandedView.setPendingIntentTemplate(R.id.pausePlay, pendingSwitchIntent)
+
         }
     }
 
