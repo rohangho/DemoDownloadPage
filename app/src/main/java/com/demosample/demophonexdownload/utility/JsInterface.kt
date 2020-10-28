@@ -50,6 +50,15 @@ class JsInterface(val mContext: Context) {
             expandedView.setTextViewText(R.id.title, "Browser")
             expandedView.setTextViewText(R.id.desc, "This is a description. - PLAYING")
             expandedView.setImageViewResource(R.id.pausePlay, R.drawable.ic_baseline_pause_24)
+
+            val pendingSwitchIntent = PendingIntent.getBroadcast(
+                mContext, 0, Intent(
+                    mContext,
+                    NotificationListner::class.java
+                ), 0
+            )
+            expandedView.setOnClickPendingIntent(R.id.pausePlay, pendingSwitchIntent)
+
             val builder = NotificationCompat.Builder(mContext, "0")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Demo Heading")
@@ -62,13 +71,6 @@ class JsInterface(val mContext: Context) {
                 mContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.notify(0, builder.build())
 
-            val pendingSwitchIntent = PendingIntent.getBroadcast(
-                mContext, 0, Intent(
-                    mContext,
-                    NotificationListner::class.java
-                ), 0
-            )
-            expandedView.setPendingIntentTemplate(R.id.pausePlay, pendingSwitchIntent)
 
         } else {
             createNotificationChannel()
@@ -79,6 +81,15 @@ class JsInterface(val mContext: Context) {
             expandedView.setTextViewText(R.id.title, "Browser")
             expandedView.setTextViewText(R.id.desc, "This is a description. - PLAYING")
             expandedView.setImageViewResource(R.id.pausePlay, R.drawable.ic_baseline_play_arrow_24)
+
+            val pendingSwitchIntent = PendingIntent.getBroadcast(
+                mContext, 0, Intent(
+                    mContext,
+                    NotificationListner::class.java
+                ), 0
+            )
+            expandedView.setOnClickPendingIntent(R.id.pausePlay, pendingSwitchIntent)
+
             val builder = NotificationCompat.Builder(mContext, "0")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Demo Heading")
@@ -91,14 +102,6 @@ class JsInterface(val mContext: Context) {
                 mContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.notify(0, builder.build())
 
-
-            val pendingSwitchIntent = PendingIntent.getBroadcast(
-                mContext, 0, Intent(
-                    mContext,
-                    NotificationListner::class.java
-                ), 0
-            )
-            expandedView.setPendingIntentTemplate(R.id.pausePlay, pendingSwitchIntent)
 
         }
     }
@@ -113,7 +116,7 @@ class JsInterface(val mContext: Context) {
             val serviceChannel = NotificationChannel(
                 "0",
                 "Demo",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             )
             val manager: NotificationManager =
                 mContext.getSystemService(NotificationManager::class.java)

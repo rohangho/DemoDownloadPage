@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.demosample.demophonexdownload.R
@@ -17,6 +18,7 @@ class NotificationListner : BroadcastReceiver() {
 
 
     override fun onReceive(context: Context, intent: Intent) {
+        Log.d("Hiiiiiiiiii", "onReceive: ")
         if (JsInterface.playing) {
             wv.evaluateJavascript("mediaElement.pause();", null)
             createNotificationChannel(context)
@@ -26,6 +28,17 @@ class NotificationListner : BroadcastReceiver() {
             expandedView.setTextViewText(R.id.title, "Browser")
             expandedView.setTextViewText(R.id.desc, "This is a description. - PLAYING")
             expandedView.setImageViewResource(R.id.pausePlay, R.drawable.ic_baseline_play_arrow_24)
+
+
+            val pendingSwitchIntent = PendingIntent.getBroadcast(
+                context, 0, Intent(
+                    context,
+                    NotificationListner::class.java
+                ), 0
+            )
+            expandedView.setOnClickPendingIntent(R.id.pausePlay, pendingSwitchIntent)
+
+
             val builder = NotificationCompat.Builder(context, "0")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Demo Heading")
@@ -37,15 +50,11 @@ class NotificationListner : BroadcastReceiver() {
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.notify(0, builder.build())
-            val pendingSwitchIntent = PendingIntent.getBroadcast(
-                context, 0, Intent(
-                    context,
-                    NotificationListner::class.java
-                ), 0
-            )
-            expandedView.setPendingIntentTemplate(R.id.pausePlay, pendingSwitchIntent)
+
+            JsInterface.playing = false
+
         } else {
-            wv.evaluateJavascript("mediaElement.pause();", null)
+            wv.evaluateJavascript("mediaElement.play();", null)
             createNotificationChannel(context)
             val expandedView = RemoteViews(context.packageName, R.layout.notification_ui)
 
@@ -53,6 +62,13 @@ class NotificationListner : BroadcastReceiver() {
             expandedView.setTextViewText(R.id.title, "Browser")
             expandedView.setTextViewText(R.id.desc, "This is a description. - PLAYING")
             expandedView.setImageViewResource(R.id.pausePlay, R.drawable.ic_baseline_play_arrow_24)
+            val pendingSwitchIntent = PendingIntent.getBroadcast(
+                context, 0, Intent(
+                    context,
+                    NotificationListner::class.java
+                ), 0
+            )
+            expandedView.setOnClickPendingIntent(R.id.pausePlay, pendingSwitchIntent)
             val builder = NotificationCompat.Builder(context, "0")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Demo Heading")
@@ -64,14 +80,8 @@ class NotificationListner : BroadcastReceiver() {
             val notificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.notify(0, builder.build())
+            JsInterface.playing = true
 
-            val pendingSwitchIntent = PendingIntent.getBroadcast(
-                context, 0, Intent(
-                    context,
-                    NotificationListner::class.java
-                ), 0
-            )
-            expandedView.setPendingIntentTemplate(R.id.pausePlay, pendingSwitchIntent)
         }
 
     }
@@ -81,7 +91,7 @@ class NotificationListner : BroadcastReceiver() {
             val serviceChannel = NotificationChannel(
                 "0",
                 "Demo",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             )
             val manager: NotificationManager =
                 mcontext.getSystemService(NotificationManager::class.java)

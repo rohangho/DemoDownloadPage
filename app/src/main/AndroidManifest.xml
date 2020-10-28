@@ -19,9 +19,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
-        <receiver android:name=".broadcast.NotificationListner" />
+        <receiver
+            android:name=".broadcast.NotificationListner"
+            android:enabled="true" />
     </application>
 
 </manifest>
