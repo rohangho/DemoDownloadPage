@@ -1,9 +1,11 @@
 package com.demosample.demophonexdownload.activity
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demosample.demophonexdownload.R
 import com.demosample.demophonexdownload.adapter.VideoAdapter
+import com.demosample.demophonexdownload.utility.JsInterface
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
@@ -60,6 +63,53 @@ class MainActivity : AppCompatActivity() {
 
         webDisplayer = findViewById(R.id.webview)
         webDisplayer.loadUrl("https://gaana.com")
+
+
+        webDisplayer.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView, newProgress: Int) {
+                super.onProgressChanged(view, newProgress)
+                if (newProgress === 100) {
+                    val code = "var mediaElement;" +
+                            "mediaCheck();" +
+                            "document.onclick = function(){" +
+                            "    mediaCheck();" +
+                            "};" +
+                            "function mediaCheck(){" +
+                            "    for(var i = 0; i < document.getElementsByTagName('video').length; i++){" +
+                            "        var media = document.getElementsByTagName('video')[i];" +
+                            "        media.onplay = function(){" +
+                            "            mediaElement = media;" +
+                            "            JSOUT.mediaAction('true');" +
+                            "        };" +
+                            "        media.onpause = function(){" +
+                            "            mediaElement = media;" +
+                            "            JSOUT.mediaAction('false');" +
+                            "        };" +
+                            "    }" +
+                            "    for(var i = 0; i < document.getElementsByTagName('audio').length; i++){" +
+                            "        var media = document.getElementsByTagName('audio')[i];" +
+                            "        media.onplay = function(){" +
+                            "            mediaElement = media;" +
+                            "            JSOUT.mediaAction('true');" +
+                            "        };" +
+                            "        media.onpause = function(){" +
+                            "            mediaElement = media;" +
+                            "            JSOUT.mediaAction('false');" +
+                            "        };" +
+                            "    }" +
+                            "}"
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        webDisplayer.evaluateJavascript(code, null)
+                    } else {
+                        webDisplayer.loadUrl("javascript:$code")
+                    }
+                }
+            }
+
+
+        }
+
+
         webDisplayer.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
                 view: WebView,
@@ -82,6 +132,7 @@ class MainActivity : AppCompatActivity() {
         webDisplayer.settings.domStorageEnabled = true
         webDisplayer.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webDisplayer.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+        webDisplayer.addJavascriptInterface(JsInterface(this), "JSOUT")
 
     }
 
