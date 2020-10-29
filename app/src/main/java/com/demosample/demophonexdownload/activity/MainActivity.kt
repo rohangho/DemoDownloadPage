@@ -1,9 +1,7 @@
 package com.demosample.demophonexdownload.activity
 
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
@@ -29,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var videoRecycler: RecyclerView
     var videoLIst: ArrayList<String> = ArrayList()
     var videoAdapter = VideoAdapter(this, videoLIst)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,12 +97,20 @@ class MainActivity : AppCompatActivity() {
                             "        };" +
                             "    }" +
                             "}"
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        webDisplayer.evaluateJavascript(code, null)
-                    } else {
-                        webDisplayer.loadUrl("javascript:$code")
-                    }
+                    webDisplayer.evaluateJavascript(code, null)
                 }
+            }
+
+            override fun onReceivedIcon(view: WebView?, icon: Bitmap?) {
+                super.onReceivedIcon(view, icon)
+                img = icon!!
+
+
+            }
+
+            override fun onReceivedTitle(view: WebView?, title: String?) {
+                super.onReceivedTitle(view, title)
+                webTitle = title!!
             }
 
 
@@ -117,12 +124,6 @@ class MainActivity : AppCompatActivity() {
             ): Boolean {
                 view.loadUrl(request.url.toString())
                 return true
-            }
-
-            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                Log.e("HIIII", "onPageStarted: $url")
-
             }
 
 
@@ -152,6 +153,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         lateinit var wv: WebView
+        lateinit var img: Bitmap
+        lateinit var webTitle: String
     }
 
 

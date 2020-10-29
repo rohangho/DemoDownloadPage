@@ -12,6 +12,8 @@ import android.webkit.JavascriptInterface
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.demosample.demophonexdownload.R
+import com.demosample.demophonexdownload.activity.MainActivity.Companion.img
+import com.demosample.demophonexdownload.activity.MainActivity.Companion.webTitle
 import com.demosample.demophonexdownload.broadcast.NotificationListner
 import java.lang.Boolean
 
@@ -22,48 +24,30 @@ class JsInterface(val mContext: Context) {
         Log.e("Info", type!!)
         playing = Boolean.parseBoolean(type)
         if (playing) {
-//            val mNotificationManager =
-//                mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//            val builder = Notification.Builder(mContext)
-//            val notification = builder.notification
-//            notification.icon = R.drawable.ic_launcher_foreground
-//            val contentView = RemoteViews(mContext.getPackageName(), R.layout.notification_ui)
-//            notification.contentView = contentView
-//            notification.flags = notification.flags or Notification.FLAG_ONGOING_EVENT
-//            contentView.setTextViewText(R.id.title, "Browser")
-//            contentView.setTextViewText(R.id.desc, "This is a description. - PLAYING")
-//            contentView.setImageViewResource(R.id.pausePlay, R.drawable.ic_baseline_pause_24)
-//            val pendingSwitchIntent = PendingIntent.getBroadcast(
-//                mContext,
-//                0,
-//                Intent(mContext, MainActivity::class.java),
-//                0
-//            )
-//            contentView.setOnClickPendingIntent(R.id.pausePlay, pendingSwitchIntent)
-//            mNotificationManager.notify(99, notification)
-
             createNotificationChannel()
 
-            val expandedView = RemoteViews(mContext.packageName, R.layout.notification_ui)
+            val expandedView = RemoteViews(mContext.packageName, R.layout.notification_ui_expanded)
 
-            expandedView.setImageViewResource(R.id.icon, R.drawable.ic_launcher_foreground)
-            expandedView.setTextViewText(R.id.title, "Browser")
-            expandedView.setTextViewText(R.id.desc, "This is a description. - PLAYING")
+            val normalView = RemoteViews(mContext.packageName, R.layout.notification_ui)
+            normalView.setImageViewBitmap(R.id.icon_normal, img)
+            normalView.setTextViewText(R.id.title_normal, "MagTapp")
+
+            expandedView.setImageViewBitmap(R.id.icon, img)
+            expandedView.setTextViewText(R.id.title, "MagTapp")
+            expandedView.setTextViewText(R.id.desc, webTitle)
             expandedView.setImageViewResource(R.id.pausePlay, R.drawable.ic_baseline_pause_24)
 
             val pendingSwitchIntent = PendingIntent.getBroadcast(
-                mContext, 0, Intent(
+                    mContext, 0, Intent(
                     mContext,
                     NotificationListner::class.java
-                ), 0
+            ), 0
             )
             expandedView.setOnClickPendingIntent(R.id.pausePlay, pendingSwitchIntent)
 
             val builder = NotificationCompat.Builder(mContext, "0")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Demo Heading")
-                .setContentText("Demo Content")
-                .setCustomBigContentView(expandedView)
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setCustomContentView(expandedView)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
 
@@ -75,26 +59,27 @@ class JsInterface(val mContext: Context) {
         } else {
             createNotificationChannel()
 
-            val expandedView = RemoteViews(mContext.packageName, R.layout.notification_ui)
+            val expandedView = RemoteViews(mContext.packageName, R.layout.notification_ui_expanded)
+            val normalView = RemoteViews(mContext.packageName, R.layout.notification_ui)
+            normalView.setImageViewBitmap(R.id.icon_normal, img)
+            normalView.setTextViewText(R.id.title_normal, "MagTapp")
 
-            expandedView.setImageViewResource(R.id.icon, R.drawable.ic_launcher_foreground)
-            expandedView.setTextViewText(R.id.title, "Browser")
-            expandedView.setTextViewText(R.id.desc, "This is a description. - PLAYING")
+            expandedView.setImageViewBitmap(R.id.icon, img)
+            expandedView.setTextViewText(R.id.title, "MagTapp")
+            expandedView.setTextViewText(R.id.desc, webTitle)
             expandedView.setImageViewResource(R.id.pausePlay, R.drawable.ic_baseline_play_arrow_24)
 
             val pendingSwitchIntent = PendingIntent.getBroadcast(
-                mContext, 0, Intent(
+                    mContext, 0, Intent(
                     mContext,
                     NotificationListner::class.java
-                ), 0
+            ), 0
             )
             expandedView.setOnClickPendingIntent(R.id.pausePlay, pendingSwitchIntent)
 
             val builder = NotificationCompat.Builder(mContext, "0")
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("Demo Heading")
-                .setContentText("Demo Content")
-                .setCustomBigContentView(expandedView)
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setCustomContentView(expandedView)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
 
